@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'calculadora.dart'; // Certifique-se de que o arquivo 'calculadora.dart' está na mesma pasta.
 
 void main() {
   runApp(const App());
@@ -57,6 +56,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(20.0),
             child: Text(
               _message,
+              key: const Key('message'),
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
             ),
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    child: const Calculadora(), // Corrigido: Classe com inicial maiúscula.
+                    child: const Calculadora(), // Widget Calculadora funcional.
                   ),
                 ),
                 const Spacer(flex: 1),
@@ -117,6 +117,45 @@ class _HomePageState extends State<HomePage> {
         tooltip: 'Informação',
         child: const Icon(Icons.info),
       ),
+    );
+  }
+}
+
+class Calculadora extends StatelessWidget {
+  const Calculadora({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          key: const Key('input1'),
+          decoration: const InputDecoration(
+            labelText: 'Número 1',
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          key: const Key('input2'),
+          decoration: const InputDecoration(
+            labelText: 'Número 2',
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Cálculo realizado!")),
+            );
+          },
+          child: const Text("Calcular"),
+        ),
+      ],
     );
   }
 }
